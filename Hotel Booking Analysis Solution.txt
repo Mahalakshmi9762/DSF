@@ -1,0 +1,37 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Step 1: Read Data from Excel File
+df = pd.read_excel('hotel_booking_data.xlsx')
+
+# Get monthly bookings
+monthly_bookings = df.groupby('arrival_date_month').size()
+
+# Plot histogram
+plt.figure(figsize=(10, 6))
+plt.hist(monthly_bookings, bins=12, color='b', alpha=0.7)
+plt.title('Monthly Booking Trends (Histogram)')
+plt.xlabel('Number of Bookings')
+plt.ylabel('Frequency')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
+# Bubble chart: Relationship between length of stay, ADR, and number of special requests
+plt.figure(figsize=(10, 6))
+sns.scatterplot(x='stays_in_week_nights', y='adr', size='adr', data=df)
+plt.title('Length of Stay vs ADR')
+plt.xlabel('Length of Stay (Nights)')
+plt.ylabel('ADR')
+plt.tight_layout()
+plt.show()
+
+# Create a violin plot to visualize the distribution of special requests by hotel type
+plt.figure(figsize=(10, 6))
+sns.violinplot(x='hotel', y='total_of_special_requests', data=df)
+plt.title('Distribution of Special Requests by Hotel Type')
+plt.xlabel('Hotel Type')
+plt.ylabel('Total Special Requests')
+plt.tight_layout()
+plt.show()
